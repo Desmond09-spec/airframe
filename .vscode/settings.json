@@ -1,0 +1,14 @@
+{
+  "markdown-pdf.styles": [
+    "pdf-style.css"
+  ],
+  "markdown-pdf.headerTemplate": "<div style=\"font-size: 7pt; font-family: Inter, Segoe UI, sans-serif; color: #737370; width: 100%; padding: 0 1cm; display: flex; justify-content: space-between;\"><span>AIRFRAME DESIGN BOOK</span><span>v0.1 — July 2026</span></div>",
+  "markdown-pdf.footerTemplate": "<div style=\"font-size: 7pt; font-family: Inter, Segoe UI, sans-serif; color: #737370; width: 100%; text-align: center; padding: 0 1cm;\"><span class='pageNumber'></span> / <span class='totalPages'></span></div>",
+  "markdown-pdf.margin.top": "1.5cm",
+  "markdown-pdf.margin.bottom": "1.5cm",
+  "markdown-pdf.margin.right": "2cm",
+  "markdown-pdf.margin.left": "2cm",
+  "markdown-pdf.format": "A4",
+  "markdown-pdf.printBackground": true,
+  "markdown-pdf.displayHeaderFooter": true
+}

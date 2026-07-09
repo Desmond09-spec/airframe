@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #4D8AFF;
+  --color-background: #0A0A0A;
+  --color-foreground: #FAFAFA;
+}
+
+@layer base {
+  :root {
+    --background: #0A0A0A;
+    --foreground: #FAFAFA;
+    --brand: #4D8AFF;
+  }
+}
+
+@layer base {
+  * {
+    border-color: #27272a;
+    outline-color: #27272a;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden; /* App is single-page, no scrolling */
+    user-select: none; /* Prevent selection on mobile */
+  }
+}

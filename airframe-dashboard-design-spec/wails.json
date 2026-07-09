@@ -1,0 +1,13 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "airframe-dashboard-design-spec",
+  "outputfilename": "airframe-dashboard-design-spec",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Desmond09-spec",
+    "email": "danieloluwawemimo@gmail.com"
+  }
+}

@@ -1,0 +1,263 @@
+:root {
+  --bg: #0A0A09;
+  --text-primary: #FAFAF9;
+  --text-secondary: #737370;
+  --border: rgba(255, 255, 255, 0.08);
+  --live: #FF6600;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* App container */
+.app {
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+}
+
+/* Header */
+.app__header {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app__logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: var(--live);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+}
+
+.app__title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.app__live-indicator {
+  margin-left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app__live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--live);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.app__live-text {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--live);
+}
+
+/* Card */
+.app__card {
+  max-width: 448px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.app__loading-spinner {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.app__loading-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.app__card-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: -0.025em;
+}
+
+.app__card-description {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 32px;
+  line-height: 1.625;
+}
+
+/* Status rows */
+.app__status-rows {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.app__status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+}
+
+.app__status-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app__status-label-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.app__status-value {
+  font-size: 14px;
+  color: rgba(250, 250, 249, 0.8);
+  font-family: var(--font-mono);
+}
+
+/* Stats panel */
+.app__stats {
+  position: absolute;
+  bottom: 32px;
+  left: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.app__stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+}
+
+.app__stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.app__stat-value {
+  font-size: 12px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+/* Monitoring thumbnail */
+.app__monitoring {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  width: 256px;
+  height: 144px;
+  background: black;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.app__monitoring-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.app__monitoring-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+  font-family: var(--font-mono);
+}
+
+.app__logo-icon {
+  color: white;
+}
+
+.app__server-icon {
+  color: var(--text-secondary);
+}
+
+.app__icon {
+  color: var(--text-secondary);
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+

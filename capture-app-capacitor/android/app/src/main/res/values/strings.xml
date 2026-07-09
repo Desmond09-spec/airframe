@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Airframe Capture</string>
+    <string name="title_activity_main">Airframe Capture</string>
+    <string name="package_name">com.desmond09.airframe</string>
+    <string name="custom_url_scheme">com.desmond09.airframe</string>
+</resources>

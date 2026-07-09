@@ -1,0 +1,53 @@
+{
+  "applicationId": "com.airframe.receiver",
+  "version": "0.1.0",
+  "defaultMode": "window",
+  "port": 0,
+  "documentRoot": "/dist/",
+  "url": "/index.html",
+  "enableServer": true,
+  "enableNativeAPI": true,
+  "tokenSecurity": "one-time",
+  "logging": {
+    "enabled": true,
+    "writeToLogFile": true
+  },
+  "nativeAllowList": [
+    "app.*",
+    "os.*",
+    "window.*",
+    "events.*"
+  ],
+  "modes": {
+    "window": {
+      "title": "Airframe Receiver",
+      "width": 1280,
+      "height": 720,
+      "minWidth": 800,
+      "minHeight": 600,
+      "fullScreen": false,
+      "alwaysOnTop": false,
+      "icon": "/dist/icon.png",
+      "enableInspector": false,
+      "borderless": false,
+      "maximize": false,
+      "hidden": false,
+      "resizable": true
+    }
+  },
+  "cli": {
+    "binaryName": "airframe-receiver",
+    "resourcesPath": "/dist/",
+    "extensionsPath": "/extensions/",
+    "clientLibrary": "/public/neutralino.js",
+    "binaryVersion": "5.3.0",
+    "clientVersion": "5.3.0",
+    "frontendLibrary": {
+      "projectPath": "/",
+      "initCommand": "npm install",
+      "devCommand": "vite",
+      "buildCommand": "vite build",
+      "devUrl": "http://localhost:5173"
+    }
+  }
+}

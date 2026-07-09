@@ -1,0 +1,16 @@
+- `[/]` Setup Desktop Receiver (NeutralinoJS)
+  - `[ ]` Install Neutralino CLI
+  - `[ ]` Download Neutralino binaries to `receiver-app`
+  - `[ ]` Configure `neutralino.config.json` for Vite dev and production
+  - `[ ]` Update `package.json` scripts
+- `[ ]` Setup Mobile Capture (Expo React Native)
+  - `[ ]` Backup current `capture-app`
+  - `[ ]` Initialize new `capture-app` with Expo (TypeScript)
+  - `[ ]` Install `react-native-vision-camera`, `react-native-webrtc`, and dependencies
+  - `[ ]` Configure `app.json` plugins and permissions
+  - `[ ]` Set up `eas.json` for cloud builds
+- `[x]` Port Capture App Logic
+  - `[ ]` Rebuild UI in React Native
+  - `[ ]` Port WebRTC transport logic to `react-native-webrtc`
+  - `[ ]` Hook up Vision Camera for pristine local feed
+- `[ ]` Verify system
