@@ -1,0 +1,87 @@
+name: Release Airframe Dashboard
+
+on:
+  push:
+    tags:
+      - 'dashboard-v*' # Trigger on tags like dashboard-v1.0.0
+
+permissions:
+  contents: write # Needed to create GitHub Releases and commit updates to stable.json
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'airframe-dashboard/frontend/package-lock.json'
+
+      - name: Install Wails
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+
+      - name: Build Dashboard (Windows)
+        working-directory: ./airframe-dashboard
+        run: |
+          wails build -clean
+        
+      - name: Compress Executable
+        working-directory: ./airframe-dashboard/build/bin
+        run: |
+          $Version = "${{ github.ref_name }}".Replace("dashboard-v", "")
+          $ZipName = "airframe-dashboard-$Version.zip"
+          Compress-Archive -Path "airframe-dashboard.exe" -DestinationPath $ZipName
+          echo "ZIP_NAME=$ZipName" >> $env:GITHUB_ENV
+          echo "VERSION=$Version" >> $env:GITHUB_ENV
+
+      - name: Calculate Hash and Size
+        working-directory: ./airframe-dashboard/build/bin
+        run: |
+          $File = Get-Item "${{ env.ZIP_NAME }}"
+          $Size = $File.Length
+          $Hash = (Get-FileHash $File.FullName -Algorithm SHA256).Hash.ToLower()
+          echo "FILE_SIZE=$Size" >> $env:GITHUB_ENV
+          echo "FILE_HASH=$Hash" >> $env:GITHUB_ENV
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: airframe-dashboard/build/bin/${{ env.ZIP_NAME }}
+          name: Airframe Dashboard ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Update Manifest
+        run: |
+          $ManifestPath = "manifest-server/public/stable.json"
+          $Manifest = Get-Content $ManifestPath | ConvertFrom-Json
+          
+          # Assuming the first package is the dashboard
+          $Manifest.packages[0].version = "${{ env.VERSION }}"
+          $Manifest.packages[0].url = "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/${{ env.ZIP_NAME }}"
+          $Manifest.packages[0].size_bytes = [long]${{ env.FILE_SIZE }}
+          $Manifest.packages[0].sha256 = "${{ env.FILE_HASH }}"
+          
+          $Manifest | ConvertTo-Json -Depth 10 | Set-Content $ManifestPath
+          
+      - name: Commit and Push Manifest Update
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add manifest-server/public/stable.json
+          git commit -m "chore: auto-update manifest for ${{ env.VERSION }} [skip ci]"
+          git push origin HEAD:main

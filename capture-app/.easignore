@@ -1,0 +1,43 @@
+# Git
+.git
+.github
+
+# IDE
+.vscode
+
+# Docs
+*.md
+*.pdf
+guidelines/
+Logo/
+
+# Old projects
+receiver-app/
+receiver-app-old/
+airframe-dashboard/
+airframe-dashboard-old/
+signaling-server/
+
+# Build output
+dist/
+build/
+
+# Node
+npm-debug.log
+yarn-error.log
+
+# macOS
+.DS_Store
+
+# Android
+android/app/build/
+android/.gradle/
+
+# iOS
+ios/build/
+
+# Cache
+.expo
+.expo-shared
+
+node_modules

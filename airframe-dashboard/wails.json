@@ -9,5 +9,12 @@
   "author": {
     "name": "Desmond09-spec",
     "email": "danieloluwawemimo@gmail.com"
+  },
+  "windows": {
+    "webviewIsolation": true,
+    "resizable": true,
+    "alwaysOnTop": false,
+    "skipTaskbar": false,
+    "singleInstanceLock": true
   }
 }
