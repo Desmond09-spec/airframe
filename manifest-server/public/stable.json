@@ -1,11 +1,17 @@
 {
+  "schemaVersion": "1",
+  "channel": "stable",
   "packages": [
     {
       "id": "airframe-dashboard",
+      "name": "Airframe Dashboard",
       "version": "1.0.0",
+      "platform": "windows",
+      "arch": "amd64",
       "url": "https://github.com/Desmond09-spec/airframe/releases/download/dashboard-v1.0.0/airframe-dashboard-1.0.0.zip",
-      "size_bytes": 5366606,
-      "sha256": "b8e2ed190bfb9c8b1c21e79092d48664669fc0aa2e533673f2a10233a8573210"
+      "sizeBytes": 5366606,
+      "sha256": "b8e2ed190bfb9c8b1c21e79092d48664669fc0aa2e533673f2a10233a8573210",
+      "required": true
     }
   ]
 }
