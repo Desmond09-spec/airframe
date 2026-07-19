@@ -19,7 +19,7 @@
     "react-native-svg": "15.15.4",
     "react-native-vision-camera": "^5.1.0",
     "react-native-webrtc": "^124.0.7",
-    "react-native-zeroconf": "^0.13.0"
+    "react-native-udp": "^4.1.7"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",

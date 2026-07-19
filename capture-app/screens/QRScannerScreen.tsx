@@ -10,8 +10,8 @@ import {
   useCameraDevice,
   useCameraPermission,
   useCodeScanner,
-  CodeType,
 } from 'react-native-vision-camera';
+import type { CodeType } from 'react-native-vision-camera';
 import { X } from 'lucide-react-native';
 
 const XIcon = X as React.ComponentType<any>;

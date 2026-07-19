@@ -9,12 +9,11 @@ import (
 	"log"
 	"net"
 	"net/http"
-	"os"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/hashicorp/mdns"
 )
 
 const SignalingPort = 4747
@@ -150,39 +149,61 @@ func handleSignalingConnection(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// startSignalingServer starts the HTTP+WebSocket server.
-// This function BLOCKS (runs forever), so it must be called
-// with the 'go' keyword to run it in a background goroutine.
-func startMDNS(hostIp string) {
-	hostname, err := os.Hostname()
-	if err != nil || hostname == "" {
-		hostname = "airframe"
+const BeaconPort = 4748
+
+// startBeacon broadcasts a JSON UDP packet every 2 seconds to the LAN
+// broadcast address so that Airframe Capture apps can discover this Receiver
+// without mDNS. This is more reliable on Windows than mDNS (hashicorp/mdns
+// has known multicast binding issues on Windows, and UDP 5353 is often
+// blocked by the Windows Firewall for non-system processes).
+//
+// Beacon payload:
+//
+//	{ "name": "Airframe Receiver", "host": "192.168.x.x", "port": 4747 }
+func startBeacon(hostIp string) {
+	type beacon struct {
+		Name string `json:"name"`
+		Host string `json:"host"`
+		Port int    `json:"port"`
 	}
 
-	info := []string{"Airframe Receiver"}
-	service, err := mdns.NewMDNSService(hostname, "_airframe._tcp", "", hostIp, SignalingPort, nil, info)
+	payload, err := json.Marshal(beacon{
+		Name: "Airframe Receiver",
+		Host: hostIp,
+		Port: SignalingPort,
+	})
 	if err != nil {
-		log.Printf("[mdns] Failed to create service: %v\n", err)
+		log.Printf("[beacon] Failed to marshal beacon: %v\n", err)
 		return
 	}
 
-	server, err := mdns.NewServer(&mdns.Config{Zone: service})
-	if err != nil {
-		log.Printf("[mdns] Failed to start server: %v\n", err)
-		return
+	addr := &net.UDPAddr{
+		IP:   net.IPv4bcast,
+		Port: BeaconPort,
 	}
 
-	log.Printf("[mdns] Broadcasting _airframe._tcp on %s:%d (hostname: %s)\n", hostIp, SignalingPort, hostname)
+	conn, err := net.DialUDP("udp4", nil, addr)
+	if err != nil {
+		log.Printf("[beacon] Failed to open UDP socket: %v\n", err)
+		return
+	}
+	defer conn.Close()
 
-	// Keep the mDNS server alive for the lifetime of the process.
-	// server.Shutdown() is never called — the OS reclaims resources on exit.
-	_ = server
+	log.Printf("[beacon] Broadcasting on 255.255.255.255:%d every 2s (host: %s)\n", BeaconPort, hostIp)
+
+	ticker := time.NewTicker(2 * time.Second)
+	defer ticker.Stop()
+	for range ticker.C {
+		if _, err := conn.Write(payload); err != nil {
+			log.Printf("[beacon] Write error: %v\n", err)
+		}
+	}
 }
 
 func startSignalingServer() {
 	hostIp := getLanIp()
 
-	go startMDNS(hostIp)
+	go startBeacon(hostIp)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
