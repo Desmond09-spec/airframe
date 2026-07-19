@@ -504,3 +504,13 @@ graph TD
 - [WebRTC Specification](https://w3c.github.io/webrtc-pc/)
 - [Tailwind CSS v4](https://tailwindcss.com)
 - [Expo Documentation](https://docs.expo.dev)
+
+## Web Presence & Documentation Strategy (Stage One)
+
+For post-Stage One distribution and documentation, Airframe will utilize a top-level web presence:
+
+- **Central Hub (`airframe.website`)**: The primary domain for Airframe marketing, downloads, and documentation. Using a dedicated domain rather than subdomains emphasizes the maturity of the ecosystem and acts as the central entry point for new users to discover both the desktop Receiver and mobile Capture apps.
+- **Naming Convention**: 
+  - Modules are named as parallel peers (e.g., **Airframe Capture**, **Airframe Receiver**) without colons to avoid filesystem restrictions and signal a cohesive product suite rather than a franchise format.
+- **Universal Logo**: 
+  - A single universal "Airframe" logo (the 3D-extruded dark squircle with the geometric "A") is used across all modules. This unifies the brand identity, relying on platform contexts (desktop vs. mobile) to distinguish the specific module being run.

@@ -17,6 +17,10 @@ receiver-app-old/
 airframe-dashboard/
 airframe-dashboard-old/
 signaling-server/
+capture-app-old/
+capture-app-capacitor/
+airframe-bootstrap/
+manifest-server/
 
 # Build output
 dist/
@@ -30,11 +34,10 @@ yarn-error.log
 .DS_Store
 
 # Android
-android/app/build/
-android/.gradle/
+android/
 
 # iOS
-ios/build/
+ios/
 
 # Cache
 .expo

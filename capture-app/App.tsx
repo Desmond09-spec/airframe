@@ -35,6 +35,16 @@ function MainApp() {
   }, [cameraPerm, micPerm]);
 
   const connectSignaling = (wsUrl: string) => {
+    // Clean up any existing connections before making a new one
+    if (wsRef.current) {
+      wsRef.current.close();
+      wsRef.current = null;
+    }
+    if (pcRef.current) {
+      pcRef.current.close();
+      pcRef.current = null;
+    }
+
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
     setConnectionError(null);
